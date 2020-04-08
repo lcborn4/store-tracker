@@ -17,14 +17,14 @@ function updateNotification() {
     let numbers = (process.env.NUMBERS).split(',');
     console.log('numbers', numbers)
     console.log('numbers', numbers.length)
-    numbers.forEach(number => {
-        client.messages
-            .create({
-                body: `Let's play aoe`,
-                from: process.env.FROM,
-                to: number
-            })
-            .then(message => console.log(message.sid));
-    });
+    numbers.forEach(function (number) {
+        var message = client.messages.create({
+            body: 'Let\'s play aoe',
+            from: process.env.FROM,
+            to: number
+        })
+            .then(message => console.log(message.status))
+            .done();
+    })
 
 }
