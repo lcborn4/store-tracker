@@ -1,4 +1,7 @@
 const puppeteer = require('puppeteer');
+
+require('dotenv').config()
+console.log('process.env.STORE_CHECK_TIMER', process.env.STORE_CHECK_TIMER)
 const url = 'https://centralmarket.com/shop/';
 
 const CURBSIDE = 'Curbside Pickup';
@@ -18,6 +21,7 @@ const STORE_CHECK_TIMER = process.env.STORE_CHECK_TIMER || 10 * 60 * 60;
 
 checkSlot();
 setInterval(checkSlot, STORE_CHECK_TIMER);
+setInterval(updateNotification, process.env.UPDATE_TIMER); //checks ever minute
 
 async function checkSlot() {
     console.log('checkSlot')
@@ -26,6 +30,7 @@ async function checkSlot() {
     //     headless: true,
     //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     // }
+
     const page = await browser.newPage();
     await page.goto(url);
 
@@ -57,17 +62,50 @@ async function checkSlot() {
 
         // console.log('storeStatuses[i]', storeStatuses[i]) //debug
 
+        stores[i].raw_status = storeStatuses[i];
+
         //if not in story only
         if (!storeStatuses[i].includes(IN_STORE)) {
 
             //check if slot is open
             if (!storeStatuses[i].includes(PICKUP_TIMES)) {
                 console.log('slot open')
+
+                const accountSid = process.env.ACCOUNTSID;
+                const authToken = process.env.AUTH_TOKEN;
+                const client = require('twilio')(accountSid, authToken);
+
+                client.messages
+                    .create({
+                        body: `Store: ${stores[i].name} has a slot open.`,
+                        from: process.env.FROM,
+                        to: process.env.TO
+                    })
+                    .then(message => console.log(message.sid));
+
             }
 
         }
-        stores[i].raw_status = storeStatuses[i];
+
     }
+    console.log('wait 10 mins')
 
     await browser.close();
+}
+
+function updateNotification() {
+    let mins = new Date().getMinutes();
+    if (mins === 0) {
+        const accountSid = process.env.ACCOUNTSID;
+        const authToken = process.env.AUTH_TOKEN;
+        const client = require('twilio')(accountSid, authToken);
+
+        client.messages
+            .create({
+                body: `Hour update.`,
+                from: process.env.FROM,
+                to: process.env.TO
+            })
+            .then(message => console.log(message.sid));
+    }
 }

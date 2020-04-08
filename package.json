@@ -11,10 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "cheero": "0.0.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "puppeteer": "^2.1.1",
     "request": "^2.88.2",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "twilio": "^3.42.1"
   },
   "engines": {
     "node": "10.11.0"
