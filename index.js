@@ -75,13 +75,16 @@ async function checkSlot() {
                 const authToken = process.env.AUTH_TOKEN;
                 const client = require('twilio')(accountSid, authToken);
 
-                client.messages
-                    .create({
-                        body: `Store: ${stores[i].name} has a slot open.`,
-                        from: process.env.FROM,
-                        to: process.env.TO
-                    })
-                    .then(message => console.log(message.sid));
+                //only for Austin North Lamar
+                if (stores[i].name === 'Austin North Lamar') {
+                    client.messages
+                        .create({
+                            body: `Store: ${stores[i].name} has a slot open.`,
+                            from: process.env.FROM,
+                            to: process.env.TO
+                        })
+                        .then(message => console.log(message.sid));
+                }
 
             }
 
@@ -97,6 +100,9 @@ function updateNotification() {
     let now = new Date();
     let mins = now.getMinutes();
     let hours = now.getHours();
+    console.log('now', now)
+    console.log('mins', mins)
+    console.log('hours', hours)
     if (mins === 0 && hours > 6 && hours < 22) {
         const accountSid = process.env.ACCOUNTSID;
         const authToken = process.env.AUTH_TOKEN;
@@ -109,5 +115,8 @@ function updateNotification() {
                 to: process.env.TO
             })
             .then(message => console.log(message.sid));
+    }
+    else {
+        console.log('not top of hour')
     }
 }
