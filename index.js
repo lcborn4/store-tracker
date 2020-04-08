@@ -94,8 +94,10 @@ async function checkSlot() {
 }
 
 function updateNotification() {
-    let mins = new Date().getMinutes();
-    if (mins === 0) {
+    let now = new Date();
+    let mins = now.getMinutes();
+    let hours = now.getHours();
+    if (mins === 0 && hours > 6 && hours < 22) {
         const accountSid = process.env.ACCOUNTSID;
         const authToken = process.env.AUTH_TOKEN;
         const client = require('twilio')(accountSid, authToken);
