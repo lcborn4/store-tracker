@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer');
 
 require('dotenv').config()
 console.log('process.env.STORE_CHECK_TIMER', process.env.STORE_CHECK_TIMER)
+console.log('process.env.UPDATE_TIMER', process.env.UPDATE_TIMER)
+
 const url = 'https://centralmarket.com/shop/';
 
 const CURBSIDE = 'Curbside Pickup';
