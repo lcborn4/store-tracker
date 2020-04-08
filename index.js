@@ -21,10 +21,11 @@ setInterval(checkSlot, STORE_CHECK_TIMER);
 
 async function checkSlot() {
     console.log('checkSlot')
-    const browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    const browser = await puppeteer.launch();
+    // {
+    //     headless: true,
+    //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // }
     const page = await browser.newPage();
     await page.goto(url);
 
