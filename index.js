@@ -105,7 +105,7 @@ function updateNotification() {
     console.log('now', now)
     console.log('mins', mins)
     console.log('hours', hours)
-    if (mins === 0 && hours === 9) {
+    if (mins === 0 && hours === 13) {
         const accountSid = process.env.ACCOUNTSID;
         const authToken = process.env.AUTH_TOKEN;
         const client = require('twilio')(accountSid, authToken);
