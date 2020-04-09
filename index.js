@@ -105,14 +105,14 @@ function updateNotification() {
     console.log('now', now)
     console.log('mins', mins)
     console.log('hours', hours)
-    if (mins === 0 && hours > 6 && hours < 22) {
+    if (mins === 0 && hours === 9) {
         const accountSid = process.env.ACCOUNTSID;
         const authToken = process.env.AUTH_TOKEN;
         const client = require('twilio')(accountSid, authToken);
 
         client.messages
             .create({
-                body: `Hour update.`,
+                body: `Store Tracker is online`,
                 from: process.env.FROM,
                 to: process.env.TO
             })
