@@ -109,14 +109,19 @@ function updateNotification() {
         const accountSid = process.env.ACCOUNTSID;
         const authToken = process.env.AUTH_TOKEN;
         const client = require('twilio')(accountSid, authToken);
-
-        client.messages
-            .create({
-                body: `Store Tracker is online`,
+        
+        let numbers = (process.env.NUMBERS).split(',');
+        console.log('numbers', numbers)
+        console.log('numbers', numbers.length)
+        numbers.forEach(function (number) {
+            var message = client.messages.create({
+                body: 'Store Tracker is online',
                 from: process.env.FROM,
-                to: process.env.TO
+                to: number
             })
-            .then(message => console.log(message.sid));
+                .then(message => console.log(message.status))
+                .done();
+        })
     }
     else {
         console.log('not top of hour')
