@@ -8,6 +8,7 @@ const url = 'https://centralmarket.com/shop/';
 
 const CURBSIDE = 'Curbside Pickup';
 const PICKUP_TIMES = 'All pickup times are sold out';
+const PICKUP_TIMES_AVAILABLE = 'Available';
 const IN_STORE = 'In-Store shopping only';
 
 const STORE_LIST = '.cm-delivery-modal-stores'
@@ -70,7 +71,7 @@ async function checkSlot() {
         if (!storeStatuses[i].includes(IN_STORE)) {
 
             //check if slot is open
-            if (!storeStatuses[i].includes(PICKUP_TIMES)) {
+            if (!storeStatuses[i].includes(PICKUP_TIMES) || (!storeStatuses[i].includes(PICKUP_TIMES_AVAILABLE))) {
                 console.log('slot open')
 
                 const accountSid = process.env.ACCOUNTSID;
@@ -105,11 +106,12 @@ function updateNotification() {
     console.log('now', now)
     console.log('mins', mins)
     console.log('hours', hours)
+    // 9am EST
     if (mins === 0 && hours === 13) {
         const accountSid = process.env.ACCOUNTSID;
         const authToken = process.env.AUTH_TOKEN;
         const client = require('twilio')(accountSid, authToken);
-        
+
         let numbers = (process.env.NUMBERS).split(',');
         console.log('numbers', numbers)
         console.log('numbers', numbers.length)
