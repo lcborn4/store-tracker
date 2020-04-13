@@ -72,7 +72,7 @@ async function checkSlot() {
         if (!storeStatuses[i].includes(IN_STORE)) {
 
             //check if slot is open
-            if (!storeStatuses[i].includes(PICKUP_TIMES) || (!storeStatuses[i].includes(PICKUP_TIMES_AS_SOON_AS))) {
+            if (!storeStatuses[i].includes(PICKUP_TIMES) && (!storeStatuses[i].includes(PICKUP_TIMES_AS_SOON_AS))) {
                 console.log('slot open')
 
                 const accountSid = process.env.ACCOUNTSID;
