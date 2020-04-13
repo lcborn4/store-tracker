@@ -8,7 +8,8 @@ const url = 'https://centralmarket.com/shop/';
 
 const CURBSIDE = 'Curbside Pickup';
 const PICKUP_TIMES = 'All pickup times are sold out';
-const PICKUP_TIMES_AVAILABLE = 'Available';
+// const PICKUP_TIMES_AVAILABLE = 'Available';
+const PICKUP_TIMES_AS_SOON_AS = 'as soon as';
 const IN_STORE = 'In-Store shopping only';
 
 const STORE_LIST = '.cm-delivery-modal-stores'
@@ -71,7 +72,7 @@ async function checkSlot() {
         if (!storeStatuses[i].includes(IN_STORE)) {
 
             //check if slot is open
-            if (!storeStatuses[i].includes(PICKUP_TIMES) || (!storeStatuses[i].includes(PICKUP_TIMES_AVAILABLE))) {
+            if (!storeStatuses[i].includes(PICKUP_TIMES) || (!storeStatuses[i].includes(PICKUP_TIMES_AS_SOON_AS))) {
                 console.log('slot open')
 
                 const accountSid = process.env.ACCOUNTSID;
